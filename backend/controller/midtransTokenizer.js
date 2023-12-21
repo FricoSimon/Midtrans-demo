@@ -2,7 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const url = "https://app.sandbox.midtrans.com/snap/v1/transactions"
 
-async function tokenizer() {
+async function tokenizer(price) {
     const randomOrderId = Math.floor(Math.random() * 1000);
     try {
         const response = await axios({
@@ -18,7 +18,7 @@ async function tokenizer() {
             data: {
                 transaction_details: {
                     order_id: "ORDER-" + randomOrderId,
-                    gross_amount: 200000
+                    gross_amount: price
                 }
             }
         });
