@@ -29,7 +29,7 @@
 			<br />
 
 			<label for="price">Price:</label>
-			<input type="number" id="price" name="price" value="10000" required />
+			<input type="number" id="price" name="price" required />
 			<br />
 
 			<button id="submit" type="submit">Place Order</button>
@@ -41,10 +41,17 @@
 			payButton.addEventListener("click", function (event) {
 				event.preventDefault();
 
-				fetch("http://localhost:9000/api/v1/checkout", { method: "POST" })
+				fetch("http://localhost:9000/api/v1/checkout", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ price: price.value }),
+				})
 					.then((response) => response.json())
 					.then((data) => {
 						window.snap.pay(data.token);
+					})
+					.catch((error) => {
+						console.log(error);
 					});
 			});
 		</script>
