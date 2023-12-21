@@ -5,6 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Checkout Form</title>
 		<link rel="stylesheet" href="page.css" />
+
+		<script
+			type="text/javascript"
+			src="https://app.sandbox.midtrans.com/snap/snap.js"
+			data-client-key="SB-Mid-client-KqIgA-vgfsSqBH9x"
+		></script>
 	</head>
 	<body>
 		<h1>Checkout</h1>
@@ -28,5 +34,19 @@
 
 			<button id="submit" type="submit">Place Order</button>
 		</form>
+
+		<div id="snap-container"></div>
+		<script type="text/javascript">
+			var payButton = document.getElementById("submit");
+			payButton.addEventListener("click", function (event) {
+				event.preventDefault();
+
+				fetch("http://localhost:9000/api/v1/checkout", { method: "POST" })
+					.then((response) => response.json())
+					.then((data) => {
+						window.snap.pay(data.token);
+					});
+			});
+		</script>
 	</body>
 </html>
