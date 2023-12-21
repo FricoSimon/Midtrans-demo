@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/api/v1/checkout', async (req, res) => {
-    const result = await tokenizer();
+    const price = req.body.price;
+    const result = await tokenizer(price);
     const token = result.token;
     console.log("transaction token: ", token);
     res.json({ token: token });
