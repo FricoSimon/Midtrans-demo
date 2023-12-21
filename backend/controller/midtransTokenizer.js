@@ -3,6 +3,7 @@ const axios = require('axios');
 const url = "https://app.sandbox.midtrans.com/snap/v1/transactions"
 
 async function tokenizer() {
+    const randomOrderId = Math.floor(Math.random() * 1000);
     try {
         const response = await axios({
             url: url,
@@ -16,12 +17,12 @@ async function tokenizer() {
             },
             data: {
                 transaction_details: {
-                    order_id: "ORDER-101",
+                    order_id: "ORDER-" + randomOrderId,
                     gross_amount: 200000
                 }
             }
         });
-        console.log(response.data);
+        return response.data
     } catch (error) {
         console.error(error);
     }
