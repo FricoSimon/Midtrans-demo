@@ -5,6 +5,12 @@ const url_payment_link = "https://api.sandbox.midtrans.com/v1/payment-links";
 
 async function tokenizer(price) {
     const randomOrderId = Math.floor(Math.random() * 1000);
+    let data = {
+        transaction_details: {
+            order_id: "ORDER-" + randomOrderId,
+            gross_amount: price
+        }
+    };
     try {
         const response = await axios({
             url: url,
@@ -16,12 +22,7 @@ async function tokenizer(price) {
                     "Basic " +
                     Buffer.from(process.env.SERVER_KEY_SECRET).toString("base64")
             },
-            data: {
-                transaction_details: {
-                    order_id: "ORDER-" + randomOrderId,
-                    gross_amount: price
-                }
-            }
+            data: data
         });
         return response.data
     } catch (error) {
@@ -33,18 +34,10 @@ async function tokenizer(price) {
 async function paymentLink(price) {
     const randomOrderId = Math.floor(Math.random() * 1000);
     let data = {
-        item_details: [
-            {
-                id: randomOrderId,
-                name: "Midtrans Pillow",
-                price: price,
-                quantity: 1,
-            }
-        ],
         transaction_details: {
             order_id: "ORDER-" + randomOrderId,
             gross_amount: price
-        },
+        }
     };
 
     try {
