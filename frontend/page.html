@@ -69,7 +69,7 @@
 				})
 					.then((response) => response.json())
 					.then((data) => {
-						console.log(data);
+						window.open(data.payment_url);
 					})
 					.catch((error) => {
 						console.log(error);
