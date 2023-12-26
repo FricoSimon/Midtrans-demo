@@ -39,7 +39,9 @@
 
 		<div id="snap-container"></div>
 		<script type="text/javascript">
-			var payButton = document.getElementById("submit");
+			let payButton = document.getElementById("submit");
+			let paymentLink = document.getElementById("payment-link");
+
 			payButton.addEventListener("click", function (event) {
 				event.preventDefault();
 
@@ -51,6 +53,23 @@
 					.then((response) => response.json())
 					.then((data) => {
 						window.snap.pay(data.token);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			});
+
+			paymentLink.addEventListener("click", function (event) {
+				event.preventDefault();
+
+				fetch("http://localhost:9000/api/v1/payment-links", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ price: price.value }),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						console.log(data);
 					})
 					.catch((error) => {
 						console.log(error);
